@@ -1,7 +1,18 @@
 import java.util.*;
+import java.util.concurrent.*;
 
-public class mergesort
+public class MergeSort extends RecursiveAction
 {
+
+
+    public static ForkJoinPool commonPool = ForkJoinPool.commonPool();
+
+    private List<Integer> list;
+
+    public MergeSort(List<Integer> list){
+        this.list = list;
+    }
+
     @SuppressWarnings("rawtypes")
     public static Comparable[] mergeSort(Comparable[] list)
     {
@@ -15,6 +26,7 @@ public class mergesort
         Comparable[] second = new Comparable[list.length - first.length];
         System.arraycopy(list, 0, first, 0, first.length);
         System.arraycopy(list, first.length, second, 0, second.length);
+        
 
         //Sort each half recursively
         mergeSort(first);
@@ -57,6 +69,25 @@ public class mergesort
         System.arraycopy(first, iFirst, result, iMerged, first.length - iFirst);
         System.arraycopy(second, iSecond, result, iMerged, second.length - iSecond);
     }
+
+    protected void compute(){
+        if (list.size() > 1) {
+            ForkJoinTask.invokeAll(createSubtasks());
+        } else {
+
+        }
+    }
+
+    private List<MergeSort> createSubtasks(){
+        List<MergeSort> subtasks = new ArrayList<MergeSort>();
+        List<Integer> partOne = list.subList(0, (list.size()/2));    
+        List<Integer> partTwo = list.subList((list.size()/2), (list.size()));   
+        
+        subtasks.add(new MergeSort( partOne ));
+        subtasks.add(new MergeSort( partTwo ));
+
+        return subtasks;
+    }  
 
     public static void main(String[] args)
     {
