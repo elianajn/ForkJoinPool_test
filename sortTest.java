@@ -1,34 +1,29 @@
 import java.util.*;
-import java.util.concurrent.*;
- 
+import java.util.Arrays;
 
-public class mergesort extends RecursiveAction 
-{
 
-	
-	
-	private static final long serialVersionUID = 1L;
+public class sortTest {
+
 	private int array[];
    
-	public mergesort(int[] array) {
+	public sortTest(int[] array) {
 		this.array = array;
 	}
  
-	@Override
-    protected void compute()
+    private void sort()
     {
-		if (array.length > 1){
+    	if (array.length > 1){
 	    	int[] left = Arrays.copyOfRange(array, 0, array.length/2);
 	    	int[] right =Arrays.copyOfRange(array, array.length/2, array.length);
 	    
 	        //Sort each half recursively
-	        RecursiveAction leftSort = new mergesort(left);
-	        RecursiveAction rightSort = new mergesort(right);
-	        
-	        invokeAll(leftSort, rightSort);
+	        sortTest leftSort = new sortTest(left);
+	        leftSort.sort();
+	        sortTest rightSort = new sortTest(right);
+	        rightSort.sort();
 	        //Merge both halves together, overwriting to original array
 	        merge(left, right, array);
-		}
+    	}
     }
      
     private static void merge(int[] left, int[] right, int[] result) 
@@ -62,6 +57,18 @@ public class mergesort extends RecursiveAction
         System.arraycopy(left, iFirst, result, iMerged, left.length - iFirst);
         System.arraycopy(right, iSecond, result, iMerged, right.length - iSecond);
     
+       
+    }
+    public static void main(String[] args){ 
+    	int[] n = { 2, 6, 3, 5, 1 };
+    	sortTest sorter = new sortTest(n);
+    	long start = System.currentTimeMillis();
+		
+    	sorter.sort();
+		long end = System.currentTimeMillis();
+		System.out.println("Time taken: " + 
+	            (end - start) + " milliseconds");
+    	System.out.println(Arrays.toString(n));
     }
 
 }
