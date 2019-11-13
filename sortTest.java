@@ -60,8 +60,9 @@ public class sortTest {
        
     }
     public static void main(String[] args){ 
-    	int[] n = { 2, 6, 3, 5, 1 };
-    	sortTest sorter = new sortTest(n);
+    	createArray arr = new createArray();
+		int[] n = arr.generate(1000);
+		sortTest sorter = new sortTest(n);
     	long start = System.currentTimeMillis();
 		
     	sorter.sort();

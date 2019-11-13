@@ -13,7 +13,7 @@ public class mergesort extends RecursiveAction
 	public mergesort(int[] array) {
 		this.array = array;
 	}
- 
+  
 	@Override
     protected void compute()
     {

@@ -5,7 +5,8 @@ public class fork{
 	
 	public static void main(String[] args){
 		ForkJoinPool pool = new ForkJoinPool();
-		int[] ints = { 2, 6, 3, 5, 1 };
+		createArray arr = new createArray();
+		int[] ints = arr.generate(1000);
 		mergesort sort = new mergesort(ints);
 		sort.compute();
 		long start = System.currentTimeMillis();
@@ -15,4 +16,6 @@ public class fork{
 	            (end - start) + " milliseconds");
 		System.out.println(Arrays.toString(ints));
 	}
+	
+
 }
