@@ -15,7 +15,7 @@ public class mergesort extends RecursiveAction
 	}
   
 	@Override
-    protected void compute()
+    public void compute()
     {
 		if (array.length > 1){
 	    	int[] left = Arrays.copyOfRange(array, 0, array.length/2);
